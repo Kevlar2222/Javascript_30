@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+</head>
+<body>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+    <label for="saturate">Saturation:</label>
+    <input id="saturate" type="range" name="saturate" min="0" max="20" value="10" data-sizing="px">
+
+    <label for="base">Border Color</label>
+    <input id="base" type="color" name="base" value="#ffc600">
+  </div>
+
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
+  <style>
+
+    :root{
+      --baseColour: #ffc600;
+      --padding: 10px;
+      --saturate: 100%;
+    }
+
+    .hl {
+      color: var(--baseColour);
+    }
+
+    img {
+      padding: var(--padding);
+      background-color: var(--baseColour);
+      filter: saturate(var(--saturate));
+    }
+
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 30px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width: 100px;
+    }
+  </style>
+
+  <script>
+  
+    function update(e) {
+      document.documentElement.style.setProperty('--padding', e.target.value + "px");
+    }
+
+    function update2(e) {
+      document.documentElement.style.setProperty('--baseColour', e.target.value);
+    }
+
+    function update3(e) {
+      document.documentElement.style.setProperty('--saturate', (e.target.value * 10) + "%");
+    }
+
+    const padding = document.getElementById("spacing");
+    padding.addEventListener("change", update);
+    padding.addEventListener("mousemove", update);
+
+    const baseColour = document.getElementById("base");
+    baseColour.addEventListener("change", update2);
+    baseColour.addEventListener("mousemove", update2);
+
+    const saturate = document.getElementById("saturate");
+    saturate.addEventListener("change", update3);
+    saturate.addEventListener("mousemove", update3);
+
+  </script>
+
+</body>
+</html>
