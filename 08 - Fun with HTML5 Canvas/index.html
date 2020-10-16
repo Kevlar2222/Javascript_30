@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<div class="strip"></div>
+<audio class="snap" src="./snap.mp3" hidden></audio>
+<script>
+  const snap = document.querySelector(".snap");
+  const canvas = document.querySelector('#draw');
+  const ctx = canvas.getContext('2d');
+  const strip = document.querySelector(".strip");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.strokeStyle = '#BADA55';
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 100;
+  let x;
+  let y;
+  let isDrawing = false;
+  let hue = 0;
+  let width = 100;
+  let increasing = false;
+  let count = 0;
+
+  function draw(e) {
+    if(!isDrawing){
+      return;
+    }
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    x = e.offsetX;
+    y = e.offsetY;
+    hue ++;
+    if(hue > 360){
+      hue -= 360;
+    }
+    if(width >= 100){
+      increasing = false;
+    }
+    if(width <= 1){
+      increasing = true;
+    }
+    if(increasing){
+      width ++;
+    } else {
+      width --;
+    }
+    if(Math.floor(count / 360) % 3 === 1){
+      ctx.lineJoin = "bevel";
+      ctx.lineCap = "square";
+    }
+    if(Math.floor(count / 360) % 3 === 2){
+      ctx.lineJoin = "miter";
+      ctx.lineCap = "butt";
+    }
+    if(Math.floor(count / 360) % 3 === 0){
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+    }
+    count ++;
+    if(count >= 1000){
+      const data = canvas.toDataURL('image/jpeg');
+      const link = document.createElement('a');
+      link.href = data;
+      link.setAttribute('download', 'artwork');
+      snap.currentTime = 0;
+      snap.play();
+      link.innerHTML = `<img src="${data}" alt="My Artwork" />`;
+      strip.insertBefore(link, strip.firstChild);
+      count = 0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  canvas.addEventListener("mousedown", (e) => {
+    x = e.offsetX;
+    y = e.offsetY;
+    isDrawing = true;
+  })
+  canvas.addEventListener("mousemove", draw);
+  canvas.addEventListener("mouseup", () => isDrawing = false);
+  canvas.addEventListener("mouseout", () => isDrawing = false);
+
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+  canvas {
+    display: block;
+  }
+  .strip {
+    position: absolute;
+    bottom: 0;
+    padding: 2rem;
+  }
+
+  .strip img {
+    width: 100px;
+    overflow-x: scroll;
+    padding: 0.8rem 0.8rem 2.5rem 0.8rem;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    background: white;
+  }
+
+  .strip a:nth-child(5n+1) img { transform: rotate(10deg); }
+  .strip a:nth-child(5n+2) img { transform: rotate(-2deg); }
+  .strip a:nth-child(5n+3) img { transform: rotate(8deg); }
+  .strip a:nth-child(5n+4) img { transform: rotate(-11deg); }
+  .strip a:nth-child(5n+5) img { transform: rotate(12deg); }
+</style>
+
+</body>
+</html>
