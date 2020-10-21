@@ -5,7 +5,6 @@
   <title>Follow Along Nav</title>
 </head>
 <body>
-  <h2>Cool</h2>
   <nav class="top">
     <div class="dropdownBackground">
       <span class="arrow"></span>
@@ -16,59 +15,50 @@
         <a href="#">About Me</a>
         <div class="dropdown dropdown1">
           <div class="bio">
-            <img src="https://logo.clearbit.com/wesbos.com">
-            <p>Wes Bos sure does love web development. He teaches things like JavaScript, CSS and BBQ. Wait. BBQ isn't part of web development. It should be though!</p>
+            <img src="./temp.jpg">
+            <p>Kevin Satti is an aspiring web developer.</p>
           </div>
         </div>
       </li>
       <li>
-        <a href="#">Courses</a>
+        <a href="#">Projects</a>
         <ul class="dropdown courses">
           <li>
-            <span class="code">RFB</span>
-            <a href="https://ReactForBeginners.com">React For Beginners</a>
+            <span class="code">React</span>
+            <a href="https://Kevlar2222.github.io/battleships" target="_blank">Battleships Game</a>
           </li>
           <li>
-            <span class="code">ES6</span>
-            <a href="https://ES6.io">ES6 For Everyone</a>
+            <span class="code">React</span>
+            <a href="https://kevlar2222.github.io/webcam-effects/" target="_blank">Webcam Effects</a>
           </li>
           <li>
-            <span class="code">NODE</span>
-            <a href="https://LearnNode.com">Learn Node</a>
+            <span class="code">React</span>
+            <a href="https://kevlar2222.github.io/tnw/" target="_blank">TNW Clone</a>
           </li>
           <li>
-            <span class="code">STPU</span>
-            <a href="https://SublimeTextBook.com">Sublime Text Power User</a>
+            <span class="code">API</span>
+            <a href="https://kevin-satti-projects.github.io/Projects/Currencies/" target="_blank">Currency Change</a>
           </li>
           <li>
-            <span class="code">WTF</span>
-            <a href="http://Flexbox.io">What The Flexbox?!</a>
+            <span class="code">JS</span>
+            <a href="https://kevin-satti-projects.github.io/Projects/ToDo/dist/" target="_blank">To Do List</a>
           </li>
           <li>
-            <span class="code">GRID</span>
-            <a href="https://CSSGrid.io">CSS Grid</a>
+            <span class="code">JS</span>
+            <a href="https://kevlar2222.github.io/Javascript_30/08%20-%20Fun%20with%20HTML5%20Canvas/index.html" target="_blank">Canvas</a>
           </li>
           <li>
-            <span class="code">LRX</span>
-            <a href="http://LearnRedux.com">Learn Redux</a>
-          </li>
-          <li>
-            <span class="code">CLPU</span>
-            <a href="http://CommandLinePowerUser.com">Command Line Power User</a>
-          </li>
-          <li>
-            <span class="code">MMD</span>
-            <a href="http://MasteringMarkdown.com">Mastering Markdown</a>
+            <span class="code">JS</span>
+            <a href="https://kevlar2222.github.io/Javascript_30/11%20-%20Custom%20Video%20Player/index.html" target="_blank">Video Player</a>
           </li>
         </ul>
       </li>
       <li>
-        <a href="#">Other Links</a>
+        <a href="#">Contact</a>
         <ul class="dropdown dropdown3">
-          <li><a class="button" href="http://twitter.com/wesbos">Twitter</a></li>
-          <li><a class="button" href="http://facebook.com/wesbos.developer">Facebook</a></li>
-          <li><a class="button" href="http://wesbos.com">Blog</a></li>
-          <li><a class="button" href="http://wesbos.com/courses">Course Catalog</a></li>
+          <li><a class="button button1">Email: kevin.satti@hotmail.co.uk</a></li>
+          <li><a class="button button2">Phone: +44 7549 721031</a></li>
+          <li><a class="button button3">Github ID: 7671734</a></li>
         </ul>
       </li>
     </ul>
@@ -178,7 +168,7 @@
   }
 
   .bio {
-    min-width: 500px;
+    min-width: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -187,6 +177,8 @@
 
   .bio img {
     float: left;
+    width: 100px;
+    height: 80px;
     margin-right: 20px;
   }
 
@@ -206,20 +198,47 @@
   }
 
   a.button {
-    background: black;
     display: block;
     padding: 10px;
     color: white;
     margin-bottom: 10px;
+    cursor: default;
   }
 
-  /* Matches Twitter, TWITTER, twitter, tWitter, TWiTTeR... */
-  .button[href*=twitter] { background: #019FE9; }
-  .button[href*=facebook] { background: #3B5998; }
-  .button[href*=courses] { background: #ffc600; }
+  .button1 { background: #019FE9; }
+  .button2 { background: #3B5998; }
+  .button3 { background: #ffc600; }
 </style>
 
 <script>
+  const links = document.querySelectorAll(".cool > li");
+  const whiteBackground = document.querySelector(".dropdownBackground");
+  const nav = document.querySelector(".top");
+  const navCoords = nav.getBoundingClientRect();
+
+  function handleEnter() {
+    this.classList.add("trigger-enter");
+    setTimeout( () => {if(this.classList.contains("trigger-enter")){
+      this.classList.add("trigger-enter-active");
+    }}, 150);
+    whiteBackground.classList.add("open");
+    const text = this.querySelector(".dropdown");
+    const coords = text.getBoundingClientRect();
+    whiteBackground.style.width = `${coords.width}px`;
+    whiteBackground.style.height = `${coords.height}px`;
+    whiteBackground.style.transform = `translate(${coords.left - navCoords.left}px, ${coords.top - navCoords.top}px)`;
+  }
+
+  function handleLeave () {
+    this.classList.remove("trigger-enter");
+    this.classList.remove("trigger-enter-active");
+    whiteBackground.classList.remove("open");
+  }
+
+  links.forEach(link => link.addEventListener("mouseenter", handleEnter));
+  links.forEach(link => link.addEventListener("mouseleave", handleLeave));
+
+
 </script>
 
 </body>
