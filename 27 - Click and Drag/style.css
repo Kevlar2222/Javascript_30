@@ -46,7 +46,7 @@ body {
 }
 
 .item {
-  width: 80vw;
+  width: 400px;
   height: calc(100% - 40px);
   display: inline-flex;
   align-items: center;
