@@ -83,7 +83,7 @@ body {
     width: 80vw;
   }
 
-  .item:nth-child(even) { transform: scaleX(1.1) rotateY(20deg); }
-  .item:nth-child(odd) { transform: scaleX(1.1) rotateY(-20deg); }
+  .item:nth-child(even) { transform: scaleX(1.21) rotateY(20deg); }
+  .item:nth-child(odd) { transform: scaleX(1.21) rotateY(-20deg); }
 
 }
