@@ -70,3 +70,12 @@ body {
 
 .item:nth-child(even) { transform: scaleX(1.31) rotateY(40deg); }
 .item:nth-child(odd) { transform: scaleX(1.31) rotateY(-40deg); }
+
+@media all and (max-width: 1000px) {
+
+  .item{
+    height: 80vh;
+    width: 80vw;
+  }
+
+}
